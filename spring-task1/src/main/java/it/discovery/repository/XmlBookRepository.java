@@ -1,10 +1,10 @@
 package it.discovery.repository;
 
 import it.discovery.model.Book;
+import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Getter
 @Setter
-@Repository
+//@Repository
+@Named
 @Qualifier("xml")
 public class XmlBookRepository implements BookRepository {
 	private final Map<Integer, Book> books = new ConcurrentHashMap<>();

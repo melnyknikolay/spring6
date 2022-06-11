@@ -1,6 +1,8 @@
 package it.discovery.repository;
 
 import it.discovery.model.Book;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,10 +33,12 @@ public class DBBookRepository implements BookRepository {
 
 	private String db = "library";
 
+	@PostConstruct
 	public void init() {
 		System.out.println("Started db repository with server:" + server + " and database: " + db);
 	}
 
+	@PreDestroy
 	public void destroy() {
 		System.out.println("Shutting down repository ... ");
 	}
