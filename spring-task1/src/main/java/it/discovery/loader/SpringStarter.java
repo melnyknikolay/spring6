@@ -10,7 +10,10 @@ import java.util.Arrays;
 public class SpringStarter {
     public static void main(String[] args) {
         try (var context =
-                     new AnnotationConfigApplicationContext(AppConfiguration.class)) {
+                     new AnnotationConfigApplicationContext()) {
+            context.getEnvironment().setActiveProfiles("dev");
+            context.register(AppConfiguration.class);
+            context.refresh();
 
             BookService service = context.getBean(BookService.class);
 
