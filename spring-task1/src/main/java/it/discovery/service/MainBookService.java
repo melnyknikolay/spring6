@@ -4,6 +4,7 @@ import it.discovery.model.Book;
 import it.discovery.repository.BookRepository;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class MainBookService implements BookService {
 
 	private final Map<Integer, Book> bookCache = new ConcurrentHashMap<>();
 
-	public MainBookService(BookRepository repository) {
+	public MainBookService(@Qualifier("xml") BookRepository repository) {
 		this.repository = repository;
 		System.out.println("Using repository " + repository.getClass());
 	}
