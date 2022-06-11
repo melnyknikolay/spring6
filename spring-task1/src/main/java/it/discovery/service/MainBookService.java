@@ -1,6 +1,7 @@
 package it.discovery.service;
 
 import it.discovery.model.Book;
+import it.discovery.repository.BookRepository;
 import it.discovery.repository.DBBookRepository;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @Setter
 public class MainBookService {
-	private final DBBookRepository repository =
-			new DBBookRepository();
+    private final BookRepository repository =
+            new DBBookRepository();
 
 	private boolean cachingEnabled;
 
