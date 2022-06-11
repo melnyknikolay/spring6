@@ -1,11 +1,12 @@
 package it.discovery.service;
 
-import it.discovery.log.Logger;
+import it.discovery.event.LogEvent;
 import it.discovery.model.Book;
 import it.discovery.repository.BookRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.List;
 import java.util.Map;
@@ -21,17 +22,17 @@ public class MainBookService implements BookService {
 
     private final Map<Integer, Book> bookCache = new ConcurrentHashMap<>();
 
-    private final List<Logger> loggers;
+    private final ApplicationEventPublisher publisher;
 
-    public MainBookService(/*@Qualifier("xml") */BookRepository repository, List<Logger> loggers) {
+
+    public MainBookService(/*@Qualifier("xml") */BookRepository repository, ApplicationEventPublisher publisher) {
         this.repository = repository;
-        this.loggers = loggers;
+        this.publisher = publisher;
         System.out.println("Using repository " + repository.getClass());
     }
 
     @PostConstruct
     public void init() {
-        System.out.println("Found loggers: " + loggers);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class MainBookService implements BookService {
         if (cachingEnabled) {
             bookCache.put(book.getId(), book);
         }
-        loggers.forEach(logger -> logger.log("Object saved: " + book));
+        publisher.publishEvent(new LogEvent("Object saved: " + book));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package it.discovery.config;
 
+import it.discovery.event.EventBus;
 import it.discovery.log.ConsoleLogger;
 import it.discovery.log.FileLogger;
 import it.discovery.log.Logger;
@@ -9,6 +10,7 @@ import it.discovery.repository.XmlBookRepository;
 import it.discovery.service.BookService;
 import it.discovery.service.MainBookService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -39,8 +41,8 @@ public class AppConfiguration {
     }
 
     @Bean
-    public BookService bookService(BookRepository bookRepository, List<Logger> loggers) {
-        return new MainBookService(bookRepository, loggers);
+    public BookService bookService(BookRepository bookRepository, ApplicationEventPublisher publisher) {
+        return new MainBookService(bookRepository, publisher);
     }
 
     @Configuration
@@ -54,6 +56,14 @@ public class AppConfiguration {
         @Order(Ordered.HIGHEST_PRECEDENCE)
         public Logger consoleLogger() {
             return new ConsoleLogger();
+        }
+    }
+
+    @Configuration
+    public static class EventConfiguration {
+        @Bean
+        public EventBus eventBus(List<Logger> loggers) {
+            return new EventBus(loggers);
         }
     }
 }
