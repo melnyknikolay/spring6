@@ -5,9 +5,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +18,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Getter
 @Setter
-@Repository
-@Qualifier("db")
-@Primary
+//@Repository
+//@Qualifier("db")
+//@Primary
 public class DBBookRepository implements BookRepository {
 	private final Map<Integer, Book> books = new ConcurrentHashMap<>();
 
