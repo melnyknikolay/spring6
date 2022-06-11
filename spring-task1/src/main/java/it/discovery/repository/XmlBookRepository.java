@@ -2,8 +2,8 @@ package it.discovery.repository;
 
 import it.discovery.model.Book;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,14 @@ import java.util.concurrent.ConcurrentHashMap;
 //@Repository
 //@Named
 //@Qualifier("xml")
+@RequiredArgsConstructor
 public class XmlBookRepository implements BookRepository {
 	private final Map<Integer, Book> books = new ConcurrentHashMap<>();
 
 	private int counter = 0;
 
-	@Value("${xml.file}")
-	private String xmlFile;
+	//@Value("${xml.file}")
+	private final String xmlFile;
 
 	public void init() {
 		System.out.println("Started XML repository with local file:" + xmlFile);
