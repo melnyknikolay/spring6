@@ -1,5 +1,6 @@
 package it.discovery.service;
 
+import it.discovery.log.Logger;
 import it.discovery.model.Book;
 import it.discovery.repository.BookRepository;
 import jakarta.annotation.PostConstruct;
@@ -20,18 +21,17 @@ public class MainBookService implements BookService {
 
     private final Map<Integer, Book> bookCache = new ConcurrentHashMap<>();
 
-    //@Inject
-    //@Inject
-    private List<BookRepository> repositories;
+    private final List<Logger> loggers;
 
-    public MainBookService(/*@Qualifier("xml") */BookRepository repository) {
+    public MainBookService(/*@Qualifier("xml") */BookRepository repository, List<Logger> loggers) {
         this.repository = repository;
+        this.loggers = loggers;
         System.out.println("Using repository " + repository.getClass());
     }
 
     @PostConstruct
     public void init() {
-        System.out.println("Found repositories: " + repositories);
+        System.out.println("Found loggers: " + loggers);
     }
 
     @Override
@@ -41,6 +41,7 @@ public class MainBookService implements BookService {
         if (cachingEnabled) {
             bookCache.put(book.getId(), book);
         }
+        loggers.forEach(logger -> logger.log("Object saved: " + book));
     }
 
     @Override
