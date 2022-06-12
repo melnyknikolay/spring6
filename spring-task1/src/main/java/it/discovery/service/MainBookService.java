@@ -8,7 +8,6 @@ import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
@@ -53,7 +52,8 @@ public class MainBookService implements BookService {
     }
 
     @Override
-    @Async
+    //@Async
+    //TODO make saveBook return Future
     public void saveBook(Book book) {
         repository.saveBook(book);
 

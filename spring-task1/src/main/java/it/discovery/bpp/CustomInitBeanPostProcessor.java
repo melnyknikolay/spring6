@@ -9,6 +9,9 @@ import org.springframework.util.ReflectionUtils;
 import java.util.Arrays;
 
 @RequiredArgsConstructor
+//TODO add support
+// 1. ApplicationContext implementation
+// 2. Any bean as a parameter
 public class CustomInitBeanPostProcessor implements BeanPostProcessor {
 
     private final ApplicationContext context;
