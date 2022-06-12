@@ -11,18 +11,19 @@ import it.discovery.service.BookService;
 import it.discovery.service.MainBookService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.List;
 
 @Configuration(proxyBeanMethods = false)
 @PropertySource("application.properties")
+@EnableAsync
+@EnableScheduling
 public class AppConfiguration {
 
     @Bean(initMethod = "init", destroyMethod = "destroy")
@@ -62,6 +63,7 @@ public class AppConfiguration {
     @Configuration
     public static class EventConfiguration {
         @Bean
+        @Lazy
         public EventBus eventBus(List<Logger> loggers) {
             return new EventBus(loggers);
         }
