@@ -1,5 +1,6 @@
 package it.discovery.service;
 
+import it.discovery.bpp.Init;
 import it.discovery.event.LogEvent;
 import it.discovery.model.Book;
 import it.discovery.repository.BookRepository;
@@ -44,6 +45,11 @@ public class MainBookService implements BookService {
 
     @PostConstruct
     public void init() {
+    }
+
+    @Init
+    public void setup() {
+        System.out.println("Init called for service!");
     }
 
     @Override

@@ -1,5 +1,7 @@
 package it.discovery.config;
 
+import it.discovery.bpp.CustomInitBeanPostProcessor;
+import it.discovery.bpp.DebugBeanPostProcessor;
 import it.discovery.event.EventBus;
 import it.discovery.log.ConsoleLogger;
 import it.discovery.log.FileLogger;
@@ -10,6 +12,8 @@ import it.discovery.repository.XmlBookRepository;
 import it.discovery.service.BookService;
 import it.discovery.service.MainBookService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.*;
 import org.springframework.core.Ordered;
@@ -66,6 +70,19 @@ public class AppConfiguration {
         @Lazy
         public EventBus eventBus(List<Logger> loggers) {
             return new EventBus(loggers);
+        }
+    }
+
+    @Configuration
+    public static class BPPConfiguration {
+        @Bean
+        public BeanPostProcessor debugProcessor() {
+            return new DebugBeanPostProcessor();
+        }
+
+        @Bean
+        public BeanPostProcessor customInitProcessor(ApplicationContext applicationContext) {
+            return new CustomInitBeanPostProcessor(applicationContext);
         }
     }
 }

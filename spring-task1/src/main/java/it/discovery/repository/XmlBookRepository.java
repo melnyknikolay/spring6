@@ -1,9 +1,11 @@
 package it.discovery.repository;
 
+import it.discovery.bpp.Init;
 import it.discovery.model.Book;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,5 +61,8 @@ public class XmlBookRepository implements BookRepository {
 		return new ArrayList<>(books.values());
 	}
 
-
+	@Init
+	public void setup(ApplicationContext context) {
+		System.out.println("Init called for repository!");
+	}
 }
